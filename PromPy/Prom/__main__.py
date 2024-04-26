@@ -18,7 +18,7 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         helpScreen()
         exit()
-    print("o Loading image file... ", end='')
+    print("o Loading image file... ", end='', flush=True)
     try:
         file = open(sys.argv[1], 'rb')
     except:
@@ -28,17 +28,17 @@ if __name__ == "__main__":
     file.close()
     bytesize = len(filebuf)
     print(f"{bytesize} bytes")
-    print("o Opening serial port... ", end='')
+    print("o Opening serial port... ", end='', flush=True)
     port = getFirstComPort()
     com = serial.Serial(port, 115200, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
     time.sleep(3)
     print(f"{com.name}")
-    print("o Looking for programmer... ", end='')
+    print("o Looking for programmer... ", end='', flush=True)
     com.write(b'a')
     rec = com.read(1)
     if rec == b'A':
         print("OK")
-        print("o Sending bytesize... ", end='')
+        print("o Sending bytesize... ", end='', flush=True)
         com.write(bytes(str(bytesize), 'utf-8'))
         com.write(b'b')
         rec = 0
@@ -50,12 +50,12 @@ if __name__ == "__main__":
             recsize = recsize * 10 + rec[0] - b'0'[0]
         if recsize == bytesize:
             print("OK")
-            print("o Erasing FLASH... ", end='')
+            print("o Erasing FLASH... ", end='', flush=True)
             rec = com.read(1)
             if rec == b'C':
                 print("OK")
 
-                print("\r[Go Writing... ", end='')
+                print("\r[Go Writing... ", end='', flush=True)
                 pos=0
                 oldper = -1
                 while pos < bytesize:
@@ -67,10 +67,10 @@ if __name__ == "__main__":
                     com.read(1)
                     per = int(100*(pos)/bytesize)
                     if per != oldper:
-                        print(f"\r[Go Writing... {per}%", end='')
+                        print(f"\r[Go Writing... {per}%", end='', flush=True)
                         oldper = per
                 print(" OK")
-                print("\r[Go Verifying...", end='')
+                print("\r[Go Verifying...", end='', flush=True)
                 nowticks = lastticks = time.time()
                 errors = 0
                 pos = 0
@@ -84,7 +84,7 @@ if __name__ == "__main__":
                     lastticks = nowticks
                     per = int(100*(pos)/bytesize)
                     if per != oldper:
-                        print(f"\r[Go Verifying... {per}%", end='')
+                        print(f"\r[Go Verifying... {per}%", end='', flush=True)
                         oldper = per
                     if nowticks - lastticks >= 1000 or pos >= bytesize:
                         break
