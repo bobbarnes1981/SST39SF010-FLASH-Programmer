@@ -1,4 +1,5 @@
 import serial
+import serial.tools.list_ports
 import sys
 import time
 
@@ -9,7 +10,9 @@ def helpScreen():
     print("Press Ctrl+C to exit.")
 
 def getFirstComPort():
-    return "/dev/ttyUSB0"
+    for port in serial.tools.list_ports.comports():
+        return f"/dev/{port.name}"
+    return None
 
 if __name__ == "__main__":
     # TODO: enable ANSI control sequences?
@@ -30,8 +33,9 @@ if __name__ == "__main__":
     print(f"{bytesize} bytes")
     print("o Opening serial port... ", end='', flush=True)
     port = getFirstComPort()
-    com = serial.Serial(port, 115200, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
-    time.sleep(3)
+    com = serial.Serial(port, 115200, bytesize=8, parity='N', stopbits=1)
+    # pyserial resets arduino with DTR, so wait for startup
+    time.sleep(2)
     print(f"{com.name}")
     print("o Looking for programmer... ", end='', flush=True)
     com.write(b'a')

@@ -18,4 +18,4 @@
 
 ## run the program
 
-```python3 Prom test.bin```
+```python3 prom.py test.bin```
