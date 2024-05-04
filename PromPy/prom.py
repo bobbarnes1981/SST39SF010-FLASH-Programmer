@@ -62,7 +62,7 @@ if __name__ == "__main__":
                 pos=0
                 oldper = -1
                 while pos < bytesize:
-                    chunk = 16; # max buffersize of Arduino UART is 64 bytes
+                    chunk = 32; # max buffersize of Arduino UART is 64 bytes
                     if pos + chunk > bytesize:
                         chunk = bytesize - pos
                     com.write(filebuf[pos:pos+chunk])
