@@ -4,7 +4,7 @@ import sys
 import time
 
 def helpScreen():
-    print("Usage: prom <file>")
+    print("Usage: prom.py <file>")
     print("Writes the binary content of <file> to FLASH.")
     print("All data is read back and verified.")
     print("Press Ctrl+C to exit.")
