@@ -39,8 +39,8 @@ if __name__ == "__main__":
     print(f"{com.name}")
     print("o Looking for programmer... ", end='', flush=True)
     com.write(b'a')
-    rec = com.read(1)
-    if rec == b'A':
+    rec = com.read(1)[0]
+    if rec == ord('A'):
         print("OK")
         print("o Sending bytesize... ", end='', flush=True)
         com.write(bytes(str(bytesize), 'utf-8'))
@@ -48,27 +48,26 @@ if __name__ == "__main__":
         rec = 0
         recsize = 0
         while True:
-            rec = com.read(1)
-            if rec == b'B' or rec < b'0' or rec > b'9':
+            rec = com.read(1)[0]
+            if rec == ord('B') or rec < ord('0') or rec > ord('9'):
                 break
-            recsize = recsize * 10 + rec[0] - b'0'[0]
+            recsize = recsize * 10 + rec - ord('0')
         if recsize == bytesize:
             print("OK")
             print("o Erasing FLASH... ", end='', flush=True)
-            rec = com.read(1)
-            if rec == b'C':
+            rec = com.read(1)[0]
+            if rec == ord('C'):
                 print("OK")
-
                 print("\r[Go Writing... ", end='', flush=True)
                 pos=0
                 oldper = -1
                 while pos < bytesize:
-                    chunk = 32; # max buffersize of Arduino UART is 64 bytes
+                    chunk = 16; # max buffersize of Arduino UART is 64 bytes
                     if pos + chunk > bytesize:
                         chunk = bytesize - pos
                     com.write(filebuf[pos:pos+chunk])
                     pos += chunk
-                    com.read(1)
+                    com.read(1)[0]
                     per = int(100*(pos)/bytesize)
                     if per != oldper:
                         print(f"\r[Go Writing... {per}%", end='', flush=True)
@@ -81,7 +80,7 @@ if __name__ == "__main__":
                 oldper = -1
                 while True:
                     nowticks = time.time()
-                    rec = com.read(1)
+                    rec = com.read(1)[0]
                     if rec != filebuf[pos]:
                         errors+=1
                     pos+=1
