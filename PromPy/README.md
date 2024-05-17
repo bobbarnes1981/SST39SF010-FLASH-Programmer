@@ -1,16 +1,16 @@
 # PromPy
 
-Python port of prom flash programmer that should work on linux
+Python port of prom flash programmer that works on linux
 
 ## Running prom.py
 
 * Enter folder
 ```cd PromPy```
 
-* create virtual environment
+* create virtual environment*
 ```python3 -m venv .venv```
 
-* enter virtual environment
+* enter virtual environment*
 ```source .venv/bin/activate```
 
 * install requirements
@@ -18,3 +18,5 @@ Python port of prom flash programmer that should work on linux
 
 * run the program
 ```python3 prom.py test.bin```
+
+*On some systems the virtual environment is optional. Running on Debian Bookworm requires a python virtual environment.
