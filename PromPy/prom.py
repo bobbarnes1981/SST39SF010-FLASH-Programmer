@@ -1,3 +1,4 @@
+import platform
 import serial
 import serial.tools.list_ports
 import sys
@@ -11,7 +12,10 @@ def helpScreen():
 
 def getFirstComPort():
     for port in serial.tools.list_ports.comports():
-        return f"/dev/{port.name}"
+        if platform.system() == "Linux":
+            return f"/dev/{port.name}"
+        else:
+            return port.name
     return None
 
 if __name__ == "__main__":
