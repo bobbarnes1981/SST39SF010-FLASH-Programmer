@@ -19,7 +19,6 @@ def getFirstComPort():
     return None
 
 if __name__ == "__main__":
-    # TODO: enable ANSI control sequences?
     print("\nSST39SF0x0A FLASH Programmer v2.1a")
     print("Written by C. Herting (slu4) 2023\n")
     print("Ported from C++ by R. Barnes 2024\n")
@@ -39,7 +38,7 @@ if __name__ == "__main__":
     print("o Opening serial port... ", end='', flush=True)
     port = getFirstComPort()
     com = serial.Serial(port, 115200, bytesize=8, parity='N', stopbits=1)
-    # pyserial resets arduino with DTR, so wait for startup
+    # pyserial resets arduino with DTR, so wait for startup, it may be necessary to increas this value
     time.sleep(2)
     print(f"{com.name}")
     print("o Looking for programmer... ", end='', flush=True)
