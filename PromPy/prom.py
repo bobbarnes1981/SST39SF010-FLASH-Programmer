@@ -59,7 +59,7 @@ if __name__ == "__main__":
             rec = com.read(1)[0]
             if rec == ord('C'):
                 print("OK")
-                print("\r[Go Writing... ", end='', flush=True)
+                print("\rGo Writing... ", end='', flush=True)
                 pos=0
                 oldper = -1
                 while pos < bytesize:
@@ -71,10 +71,10 @@ if __name__ == "__main__":
                     com.read(1)[0]
                     per = int(100*(pos)/bytesize)
                     if per != oldper:
-                        print(f"\r[Go Writing... {per}%", end='', flush=True)
+                        print(f"\rGo Writing... {per}%", end='', flush=True)
                         oldper = per
                 print(" OK")
-                print("\r[Go Verifying...", end='', flush=True)
+                print("\rGo Verifying...", end='', flush=True)
                 nowticks = lastticks = time.time()
                 errors = 0
                 pos = 0
@@ -88,7 +88,7 @@ if __name__ == "__main__":
                     lastticks = nowticks
                     per = int(100*(pos)/bytesize)
                     if per != oldper:
-                        print(f"\r[Go Verifying... {per}%", end='', flush=True)
+                        print(f"\rGo Verifying... {per}%", end='', flush=True)
                         oldper = per
                     if nowticks - lastticks >= 1000 or pos >= bytesize:
                         break
