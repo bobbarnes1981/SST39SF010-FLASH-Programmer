@@ -12,6 +12,8 @@ def helpScreen():
 
 def getFirstComPort():
     for port in serial.tools.list_ports.comports():
+        # TODO: system() can return "Linux", "Windows", "Darwin"
+        #       not sure how apple/darwin deals with comports
         if platform.system() == "Linux":
             return f"/dev/{port.name}"
         else:
